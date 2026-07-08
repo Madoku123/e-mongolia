@@ -173,7 +173,7 @@
         @media (max-width: 767px) {
             body { background-color: #f1f5f9; padding-bottom: 90px; }
             .navbar { padding: 15px 20px; }
-            .emongolia-brand-img { height: 40px; } /* Утсан дээр логоны хэмжээг бага зэрэг жижигсгэв */
+            .emongolia-brand-img { height: 40px; }
             .main-container { display: flex; flex-direction: column; padding: 0; margin: 0; gap: 0; }
             .left-column, .right-column { gap: 0; }
             
@@ -236,11 +236,11 @@
             <div>
                 <div class="id-section-title">
                     <span>Миний бичиг баримтууд</span>
-                    <button class="btn-refresh" onclick="rotateCards()">Шинэчлэх</button>
+                    <button class="btn-refresh" onclick="handleManualRotate()">Шинэчлэх</button>
                 </div>
                 
                 <!-- 3D СЛАЙДЕР -->
-                <div class="card-slider-wrapper" id="sliderContainer" onclick="rotateCards()">
+                <div class="card-slider-wrapper" id="sliderContainer" onclick="handleManualRotate()">
                     
                     <!-- КАРТ 1: Иргэний үнэмлэх (Бүтэн зураг) -->
                     <div class="id-card active" id="card1">
@@ -357,7 +357,10 @@
 
     <script>
         let isCard1Active = true;
+        let autoRotateInterval;
+        const ROTATE_SPEED = 3000; // 3000ms буюу 3 секунд тутамд солигдоно
 
+        // Карт солих үндсэн функц
         function rotateCards() {
             const card1 = document.getElementById('card1');
             const card2 = document.getElementById('card2');
@@ -372,6 +375,24 @@
             isCard1Active = !isCard1Active;
         }
 
+        // Автомат эргэлтийг эхлүүлэх функц
+        function startAutoRotate() {
+            autoRotateInterval = setInterval(rotateCards, ROTATE_SPEED);
+        }
+
+        // Хэрэглэгч өөрөө дарах үед хугацааг шинэчилж эхлүүлэх
+        function handleManualRotate() {
+            rotateCards();
+            clearInterval(autoRotateInterval); // Хуучин тоологчийг зогсооно
+            startAutoRotate(); // Шинээр 3 секунд тоолж эхэлнэ
+        }
+
+        // Хуудас ачаалагдахад автомат эргэлтийг шууд ажиллуулна
+        window.onload = function() {
+            startAutoRotate();
+        };
+
+        // Утас дээр хуруугаар шудрах (Swipe) ложик
         let touchstartX = 0;
         let touchendX = 0;
         const slider = document.getElementById('sliderContainer');
@@ -379,7 +400,9 @@
         slider.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; });
         slider.addEventListener('touchend', e => { 
             touchendX = e.changedTouches[0].screenX; 
-            if (Math.abs(touchstartX - touchendX) > 40) rotateCards();
+            if (Math.abs(touchstartX - touchendX) > 40) {
+                handleManualRotate(); // Шударсан ч гэсэн хугацааг шинэчилнэ
+            }
         });
     </script>
 </body>
