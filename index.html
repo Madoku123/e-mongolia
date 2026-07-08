@@ -116,34 +116,24 @@
 
         /* 3D СЛАЙДЕРЫН БҮТЭЦ */
         .card-slider-wrapper {
-            position: relative; width: 100%; height: 240px; display: flex; justify-content: center; align-items: center;
+            position: relative; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center;
         }
         .id-card {
-            position: absolute; width: 100%; aspect-ratio: 85.6 / 53.98; max-width: 400px; border-radius: 14px; padding: 18px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); display: flex; flex-direction: column; justify-content: space-between;
+            position: absolute; width: 100%; aspect-ratio: 85.6 / 53.98; max-width: 400px; border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); overflow: hidden; /* Зургийг картын булангаар тайрах */
             transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s, z-index 0.6s; cursor: pointer; user-select: none;
         }
-        #card1 {
-            background: linear-gradient(135deg, #fffaf0 0%, #ffffff 100%), url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80');
-            background-size: cover; border: 1px solid #ffd591;
-        }
-        #card2 {
-            background: linear-gradient(135deg, #e6f4ff 0%, #ffffff 100%), url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=600&q=80');
-            background-size: cover; border: 1px solid #91d5ff;
+        
+        /* Бүтэн картын зургийн тохиргоо */
+        .full-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         
         .id-card.active { transform: translate3d(0, 0, 0) scale(1); z-index: 5; opacity: 1; }
         .id-card.back { transform: translate3d(20px, 15px, 0) scale(0.93); z-index: 2; opacity: 0.6; }
-
-        .id-card-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(0,0,0,0.08); padding-bottom: 8px; }
-        .flag { width: 30px; border-radius: 2px; }
-        .id-card-title { font-size: 10px; font-weight: 700; color: #1a365d; line-height: 1.2; }
-        .id-card-body { display: flex; gap: 12px; height: 75%; align-items: center; margin-top: 8px; }
-        .id-photo { width: 75px; height: 95px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); }
-        .id-details { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; flex: 1; }
-        .detail-group { display: flex; flex-direction: column; }
-        .detail-label { color: #0076ff; font-weight: 600; font-size: 8px; }
-        .detail-val { font-weight: 700; color: #1d2939; font-size: 10px; }
 
         .btn-view-all { display: block; text-align: center; background: #fff; color: #0076ff; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none; border: 1px solid #e1e8ed; margin-top: 10px; }
 
@@ -196,7 +186,7 @@
             
             .avatar { width: 52px; height: 52px; }
             .id-section-title { padding: 15px 20px 5px 20px; margin-bottom: 5px; }
-            .card-slider-wrapper { height: 230px; padding: 0 20px; }
+            .card-slider-wrapper { height: 240px; padding: 0 20px; }
             .id-card { width: calc(100% - 40px); }
             .btn-view-all { margin: 15px 20px; background-color: #fff; border: 1px solid #e1e8ed; border-radius: 12px; padding: 14px; }
 
@@ -222,7 +212,6 @@
 
     <!-- 👑 ЗУРАГТАЙ ШИНЭ NAVBAR -->
     <nav class="navbar">
-        <!-- Текстийн оронд албан ёсны лого зургийг шууд оруулав -->
         <img src="logo.png" alt="e-Mongolia" class="emongolia-brand-img">
         
         <div class="nav-right-icons">
@@ -253,45 +242,14 @@
                 <!-- 3D СЛАЙДЕР -->
                 <div class="card-slider-wrapper" id="sliderContainer" onclick="rotateCards()">
                     
-                    <!-- КАРТ 1: Иргэний үнэмлэх -->
+                    <!-- КАРТ 1: Иргэний үнэмлэх (Бүтэн зураг) -->
                     <div class="id-card active" id="card1">
-                        <div class="id-card-header">
-                            <img src="vnemleh.png" alt="Flag" class="flag">
-                            <div class="id-card-title">
-                                МОНГОЛ УЛСЫН ИРГЭНИЙ ҮНЭМЛЭХ<br>
-                                CITIZEN IDENTITY CARD OF MONGOLIA
-                            </div>
-                        </div>
-                        <div class="id-card-body">
-                            <img src="vnemleh.png" alt="ID Photo" class="id-photo">
-                            <div class="id-details">
-                                <div class="detail-group"><span class="detail-label">Овог Family name</span><span class="detail-val">Цэнд Мээрэн</span></div>
-                                <div class="detail-group"><span class="detail-label">Хүйс Sex</span><span class="detail-val">Эрэгтэй</span></div>
-                                <div class="detail-group"><span class="detail-label">Эцэг/ эх/-ийн нэр Surname</span><span class="detail-val">Сүхбаатар</span></div>
-                                <div class="detail-group"><span class="detail-label">Төрөх огноо Date of birth</span><span class="detail-val">2009/10/26</span></div>
-                                <div class="detail-group" style="grid-column: span 2;"><span class="detail-label">Нэр Given name</span><span class="detail-val">БАТ-ОРГИЛ</span></div>
-                            </div>
-                        </div>
+                        <img src="vnemleh.png" alt="Иргэний үнэмлэх" class="full-card-img">
                     </div>
 
-                    <!-- КАРТ 2: Гадаад Паспорт -->
+                    <!-- КАРТ 2: Гадаад Паспорт (Бүтэн зураг) -->
                     <div class="id-card back" id="card2">
-                        <div class="id-card-header">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Flag_of_Mongolia.svg" alt="Flag" class="flag">
-                            <div class="id-card-title">
-                                МОНГОЛ УЛС - ГАДААД ПАСПОРТ<br>
-                                MONGOLIA - PASSPORT
-                            </div>
-                        </div>
-                        <div class="id-card-body">
-                            <img src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80" alt="ID Photo" class="id-photo">
-                            <div class="id-details">
-                                <div class="detail-group"><span class="detail-label">Паспoрт №</span><span class="detail-val">E1234567</span></div>
-                                <div class="detail-group"><span class="detail-label">Төрөл Type</span><span class="detail-val">P</span></div>
-                                <div class="detail-group" style="grid-column: span 2;"><span class="detail-label">Овог Нэр / Full name</span><span class="detail-val">BAT-ORGIL TSENDMEEREN</span></div>
-                                <div class="detail-group" style="grid-column: span 2;"><span class="detail-label">Хүчинтэй хугацаа / Expiry Date</span><span class="detail-val">2034/10/26</span></div>
-                            </div>
-                        </div>
+                        <img src="vnemleh.png" alt="Гадаад паспорт" class="full-card-img">
                     </div>
 
                 </div>
